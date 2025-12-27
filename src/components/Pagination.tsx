@@ -77,45 +77,48 @@ export const Pagination = ({
   if (totalPages <= 1) return null;
 
   return (
-    <div className="flex items-center justify-center space-x-2">
-      <Button
-        variant="outline"
-        size="icon"
-        onClick={handlePrevious}
-        disabled={currentPage === 1}
-        aria-label="Go to previous page"
-      >
-        <ChevronLeft className="h-4 w-4" />
-      </Button>
-      {pageNumbers.map((page, index) => {
-        if (page === "...") {
+    <nav aria-label="Navigasi halaman">
+      <div className="flex items-center justify-center space-x-2">
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={handlePrevious}
+          disabled={currentPage === 1}
+          aria-label="Ke halaman sebelumnya"
+        >
+          <ChevronLeft className="h-4 w-4" />
+        </Button>
+        {pageNumbers.map((page, index) => {
+          if (page === "...") {
+            return (
+              <span key={`dots-${index}`} className="flex items-center justify-center h-10 w-10">
+                <MoreHorizontal className="h-4 w-4" />
+              </span>
+            );
+          }
           return (
-            <span key={`dots-${index}`} className="flex items-center justify-center h-10 w-10">
-              <MoreHorizontal className="h-4 w-4" />
-            </span>
+            <Button
+              key={page}
+              variant={currentPage === page ? "default" : "outline"}
+              size="icon"
+              onClick={() => onPageChange(page as number)}
+              aria-label={`Ke halaman ${page}`}
+              aria-current={currentPage === page ? "page" : undefined}
+            >
+              {page}
+            </Button>
           );
-        }
-        return (
-          <Button
-            key={page}
-            variant={currentPage === page ? "default" : "outline"}
-            size="icon"
-            onClick={() => onPageChange(page as number)}
-            aria-current={currentPage === page ? "page" : undefined}
-          >
-            {page}
-          </Button>
-        );
-      })}
-      <Button
-        variant="outline"
-        size="icon"
-        onClick={handleNext}
-        disabled={currentPage === totalPages}
-        aria-label="Go to next page"
-      >
-        <ChevronRight className="h-4 w-4" />
-      </Button>
-    </div>
+        })}
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={handleNext}
+          disabled={currentPage === totalPages}
+          aria-label="Ke halaman berikutnya"
+        >
+          <ChevronRight className="h-4 w-4" />
+        </Button>
+      </div>
+    </nav>
   );
 };

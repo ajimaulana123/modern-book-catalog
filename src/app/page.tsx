@@ -52,7 +52,7 @@ export default function Home() {
     // Error will be shown as a toast, but we can have a fallback UI
     return (
       <div className="flex h-screen items-center justify-center">
-        <p className="text-destructive-foreground">Failed to load books. Please try again later.</p>
+        <p className="text-destructive-foreground">Gagal memuat buku. Silakan coba lagi nanti.</p>
       </div>
     );
   }
@@ -65,7 +65,7 @@ export default function Home() {
             LitFolio
           </h1>
           <p className="mt-3 text-lg text-muted-foreground sm:mt-4">
-            Your modern book catalog, beautifully organized.
+            Katalog buku modern Anda, tertata dengan indah.
           </p>
         </header>
 
@@ -73,7 +73,7 @@ export default function Home() {
           <SearchBar
             value={searchQuery}
             onSearch={setSearchQuery}
-            placeholder="Search by title, category, or description..."
+            placeholder="Cari berdasarkan judul, kategori, atau deskripsi..."
           />
         </div>
 
@@ -95,7 +95,7 @@ export default function Home() {
         )}
       </main>
       <footer className="py-6 text-center text-sm text-muted-foreground">
-        <p>&copy; {new Date().getFullYear()} LitFolio. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} LitFolio. Semua hak dilindungi undang-undang.</p>
       </footer>
     </div>
   );

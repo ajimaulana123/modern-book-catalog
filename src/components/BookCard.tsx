@@ -31,7 +31,20 @@ const StarRating = ({ rating, className }: { rating: number, className?: string 
   );
 };
 
+const formatCurrency = (amount: number) => {
+  // Assuming the price from API is in USD, converting to IDR with an arbitrary rate
+  const idrAmount = amount * 15000;
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(idrAmount);
+};
+
 export const BookCard = ({ book }: { book: Book }) => {
+  const discountedPrice = book.price * (1 - book.discountPercentage / 100);
+
   return (
     <Card className="flex h-full flex-col overflow-hidden transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1">
       <CardHeader className="p-0">
@@ -55,21 +68,21 @@ export const BookCard = ({ book }: { book: Book }) => {
             {book.description}
           </CardDescription>
         </div>
-        <div className="mt-4 flex items-end justify-between">
-          <div>
-            <div className="flex items-baseline gap-2">
-              <p className="text-2xl font-bold text-foreground">
-                ${(book.price * (1 - book.discountPercentage / 100)).toFixed(2)}
+        <div className="mt-4 flex flex-wrap items-end justify-between gap-2">
+          <div className="flex-grow">
+             <div className="flex flex-col items-start gap-1">
+              <p className="text-xl md:text-2xl font-bold text-foreground">
+                {formatCurrency(discountedPrice)}
               </p>
               {book.discountPercentage > 0 && (
-                <p className="text-sm text-muted-foreground line-through">
-                  ${book.price.toFixed(2)}
+                <p className="text-xs md:text-sm text-muted-foreground line-through">
+                  {formatCurrency(book.price)}
                 </p>
               )}
             </div>
             <StarRating rating={book.rating} className="mt-1" />
           </div>
-          <p className="text-xs text-muted-foreground">{book.stock} in stock</p>
+          <p className="text-xs text-muted-foreground self-end whitespace-nowrap">{book.stock} tersedia</p>
         </div>
       </CardContent>
     </Card>

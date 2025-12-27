@@ -15,19 +15,23 @@ export const useBooks = () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch("https://dummyjson.com/products?limit=12");
+        const response = await fetch("https://dummyjson.com/products?limit=100");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data: BookApiResponse = await response.json();
-        setBooks(data.products);
+        // The API returns 'smartphones' and other items, let's filter for book-like things
+        const bookCategories = ["groceries", "home-decoration", "furniture", "lighting"];
+        const filteredProducts = data.products.filter(p => !bookCategories.includes(p.category));
+
+        setBooks(filteredProducts);
       } catch (e: unknown) {
-        const errorMessage = e instanceof Error ? e.message : "An unknown error occurred";
+        const errorMessage = e instanceof Error ? e.message : "Terjadi kesalahan yang tidak diketahui";
         setError(errorMessage);
         toast({
           variant: "destructive",
-          title: "Uh oh! Something went wrong.",
-          description: `There was a problem fetching the books: ${errorMessage}`,
+          title: "Oops! Terjadi kesalahan.",
+          description: `Ada masalah saat mengambil data buku: ${errorMessage}`,
         });
       } finally {
         setLoading(false);
