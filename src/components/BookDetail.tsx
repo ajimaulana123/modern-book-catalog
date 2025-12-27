@@ -17,6 +17,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
+import { Skeleton } from './ui/skeleton';
 
 const StarRating = ({
   rating,
@@ -60,6 +61,11 @@ const formatCurrency = (amount: number) => {
 export function BookDetail({ book }: { book: Book }) {
   const discountedPrice = book.price * (1 - book.discountPercentage / 100);
   const [activeTab, setActiveTab] = useState('description');
+  const [imageLoading, setImageLoading] = useState<Record<string, boolean>>({});
+
+  const handleImageLoad = (url: string) => {
+    setImageLoading(prev => ({ ...prev, [url]: false }));
+  };
 
   const tabContentVariants = {
     initial: { opacity: 0, y: 10 },
@@ -73,23 +79,30 @@ export function BookDetail({ book }: { book: Book }) {
         <div className="w-full">
             <Carousel className="w-full">
                 <CarouselContent>
-                {book.images.map((img, index) => (
+                {book.images.map((img, index) => {
+                  const isLoading = imageLoading[img] !== false;
+                  return (
                     <CarouselItem key={index}>
                     <div className="p-1">
                         <Card>
                         <CardContent className="relative aspect-video flex items-center justify-center p-0 overflow-hidden rounded-lg">
+                            {isLoading && <Skeleton className="absolute inset-0 h-full w-full rounded-lg" />}
                             <Image
                                 src={img}
                                 alt={`${book.title} - image ${index + 1}`}
                                 fill
                                 sizes="(max-width: 768px) 100vw, 50vw"
-                                className="object-contain"
+                                className={cn("object-contain transition-opacity duration-300", isLoading ? "opacity-0" : "opacity-100")}
+                                onLoadingComplete={() => handleImageLoad(img)}
+                                onLoad={() => setImageLoading(prev => ({ ...prev, [img]: true }))}
+                                onError={() => handleImageLoad(img)}
                             />
                         </CardContent>
                         </Card>
                     </div>
                     </CarouselItem>
-                ))}
+                  )
+                })}
                 </CarouselContent>
                 <CarouselPrevious className="left-2" />
                 <CarouselNext className="right-2" />
