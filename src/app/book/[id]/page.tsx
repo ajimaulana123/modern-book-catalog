@@ -67,12 +67,13 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
   const [book, setBook] = useState<Book | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+  const { id } = params;
 
   useEffect(() => {
     const fetchBook = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`https://dummyjson.com/products/${params.id}`);
+        const response = await fetch(`https://dummyjson.com/products/${id}`);
         if (!response.ok) {
           if (response.status === 404) {
             notFound();
@@ -94,7 +95,7 @@ export default function BookDetailPage({ params }: { params: { id: string } }) {
     };
 
     fetchBook();
-  }, [params.id, toast]);
+  }, [id, toast]);
 
   if (loading) {
     return (
