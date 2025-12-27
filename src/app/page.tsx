@@ -8,6 +8,7 @@ import { SearchBar } from "@/components/SearchBar";
 import { BookGrid } from "@/components/BookGrid";
 import { EmptyState } from "@/components/EmptyState";
 import { Pagination } from "@/components/Pagination";
+import { Footer } from "@/components/Footer";
 
 const ITEMS_PER_PAGE = 8;
 
@@ -53,8 +54,8 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <main className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background flex flex-col">
+      <main className="container mx-auto px-4 py-8 sm:px-6 lg:px-8 flex-grow">
         <header className="mb-8 text-center">
           <h1 className="text-6xl font-bold">
             <span className="font-logo text-primary">Ziyad</span>
@@ -92,11 +93,7 @@ export default function Home() {
           <EmptyState />
         )}
       </main>
-      <footer className="py-8 mt-8 border-t border-border">
-        <div className="container mx-auto text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Ziyadbooks. Semua hak dilindungi undang-undang.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
