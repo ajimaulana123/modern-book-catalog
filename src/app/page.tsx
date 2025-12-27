@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import type { Book } from "@/lib/types/book";
 import { useBooks } from "@/hooks/useBooks";
 
@@ -38,7 +38,7 @@ export default function Home() {
   }, [filteredBooks, currentPage]);
   
   // Reset to page 1 when search query changes
-  useMemo(() => {
+  useEffect(() => {
     setCurrentPage(1);
   }, [searchQuery]);
 
@@ -65,7 +65,7 @@ export default function Home() {
           </p>
         </header>
 
-        <div className="mb-8 max-w-2xl mx-auto">
+        <div className="mb-8 max-w-xl mx-auto">
           <SearchBar
             value={searchQuery}
             onSearch={setSearchQuery}
@@ -79,7 +79,7 @@ export default function Home() {
           <>
             <BookGrid books={paginatedBooks} />
             {totalPages > 1 && (
-              <div className="mt-8">
+              <div className="mt-12">
                 <Pagination
                   currentPage={currentPage}
                   totalPages={totalPages}
@@ -92,8 +92,10 @@ export default function Home() {
           <EmptyState />
         )}
       </main>
-      <footer className="py-6 text-center text-sm text-muted-foreground">
-        <p>&copy; {new Date().getFullYear()} Ziyadbooks. Semua hak dilindungi undang-undang.</p>
+      <footer className="py-8 mt-8 border-t border-border">
+        <div className="container mx-auto text-center text-sm text-muted-foreground">
+          <p>&copy; {new Date().getFullYear()} Ziyadbooks. Semua hak dilindungi undang-undang.</p>
+        </div>
       </footer>
     </div>
   );
