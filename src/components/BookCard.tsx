@@ -75,7 +75,7 @@ export const BookCard = ({
               variant="destructive"
               className="absolute top-3 right-3 rounded-md"
             >
-              {book.discountPercentage}% OFF
+              {Math.round(book.discountPercentage)}% OFF
             </Badge>
           )}
           <Badge variant="secondary" className="absolute top-3 left-3 rounded-md">
