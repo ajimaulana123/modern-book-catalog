@@ -86,3 +86,9 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .container {
+    @apply transition-all duration-300 ease-in-out;
+  }
+}
