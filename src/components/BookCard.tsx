@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import type { Book } from "@/lib/types/book";
 import {
   Card,
@@ -42,46 +43,48 @@ export const BookCard = ({ book }: { book: Book }) => {
   const discountedPrice = book.price * (1 - book.discountPercentage / 100);
 
   return (
-    <Card 
-      className="group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card transition-all duration-300 ease-in-out hover:shadow-xl hover:-translate-y-2 animate-fade-in"
-    >
-      <div className="relative aspect-[4/3] w-full overflow-hidden">
-        <Image
-          src={book.thumbnail}
-          alt={book.title}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-        <Badge variant="secondary" className="absolute top-3 left-3 rounded-md">{book.category}</Badge>
-      </div>
-      <CardContent className="flex flex-1 flex-col p-4">
-        <h3 className="font-headline text-lg leading-tight mb-2 flex-grow text-foreground">
-          {book.title}
-        </h3>
-        <p className="text-sm text-muted-foreground mb-4 line-clamp-3 flex-grow">
-          {book.description}
-        </p>
-        <div className="mt-4 flex flex-wrap items-end justify-between gap-2">
-          <div>
-             <div className="flex flex-col items-start gap-0">
-              <p className="text-xl font-bold text-primary">
-                {formatCurrency(discountedPrice)}
-              </p>
-              {book.discountPercentage > 0 && (
-                <p className="text-xs text-muted-foreground line-through">
-                  {formatCurrency(book.price)}
+    <Link href={`/book/${book.id}`} className="group block">
+      <Card 
+        className="flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card transition-all duration-300 ease-in-out hover:shadow-xl hover:-translate-y-2 animate-fade-in"
+      >
+        <div className="relative aspect-[4/3] w-full overflow-hidden">
+          <Image
+            src={book.thumbnail}
+            alt={book.title}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+          <Badge variant="secondary" className="absolute top-3 left-3 rounded-md">{book.category}</Badge>
+        </div>
+        <CardContent className="flex flex-1 flex-col p-4">
+          <h3 className="font-headline text-lg leading-tight mb-2 flex-grow text-foreground">
+            {book.title}
+          </h3>
+          <p className="text-sm text-muted-foreground mb-4 line-clamp-3 flex-grow">
+            {book.description}
+          </p>
+          <div className="mt-4 flex flex-wrap items-end justify-between gap-2">
+            <div>
+              <div className="flex flex-col items-start gap-0">
+                <p className="text-xl font-bold text-primary">
+                  {formatCurrency(discountedPrice)}
                 </p>
-              )}
+                {book.discountPercentage > 0 && (
+                  <p className="text-xs text-muted-foreground line-through">
+                    {formatCurrency(book.price)}
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="flex flex-col items-end gap-1">
+              <StarRating rating={book.rating} />
+              <p className="text-xs text-muted-foreground">{book.stock} tersedia</p>
             </div>
           </div>
-          <div className="flex flex-col items-end gap-1">
-            <StarRating rating={book.rating} />
-            <p className="text-xs text-muted-foreground">{book.stock} tersedia</p>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </Link>
   );
 };
