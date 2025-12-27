@@ -63,11 +63,10 @@ const BookDetailSkeleton = () => (
   </div>
 );
 
-export default function BookDetailPage({ params }: { params: { id: string } }) {
+export default function BookDetailPage({ params: { id } }: { params: { id: string } }) {
   const [book, setBook] = useState<Book | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
-  const { id } = params;
 
   useEffect(() => {
     const fetchBook = async () => {
