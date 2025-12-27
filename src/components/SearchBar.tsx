@@ -16,7 +16,7 @@ export const SearchBar = ({ value, onSearch, placeholder }: SearchBarProps) => {
       <Input
         type="search"
         placeholder={placeholder || "Search..."}
-        className="w-full rounded-md border-border bg-card py-2 pl-12 pr-4 h-12 text-base shadow-sm focus:bg-background"
+        className="w-full rounded-md border-border bg-card py-2 pl-12 pr-4 h-12 text-base shadow-sm transition-all duration-300 ease-in-out focus:bg-background focus:shadow-md focus:ring-2 focus:ring-primary/20"
         value={value}
         onChange={(e) => onSearch(e.target.value)}
         aria-label="Search books"
