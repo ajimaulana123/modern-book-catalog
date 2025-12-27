@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import Image from "next/image";
 import type { Book } from "@/lib/types/book";
 import { useBooks } from "@/hooks/useBooks";
 
@@ -62,14 +61,10 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       <main className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <header className="mb-8 text-center">
-          <Image
-            src="https://firebasestudio.ai/codelabs-assets/codelab-nextjs-litfolio/ziyadbooks-logo.png"
-            alt="Ziyadbooks Logo"
-            width={350}
-            height={71}
-            className="mx-auto"
-            priority
-          />
+          <h1 className="text-6xl font-bold text-foreground">
+            <span className="font-logo">Ziyad</span>
+            <span className="font-headline text-5xl">books</span>
+          </h1>
           <p className="mt-3 text-lg text-muted-foreground sm:mt-4">
             Katalog buku modern Anda, tertata dengan indah.
           </p>
