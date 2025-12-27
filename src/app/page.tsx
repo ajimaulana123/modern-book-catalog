@@ -6,7 +6,6 @@ import { useBooks } from "@/hooks/useBooks";
 
 import { SearchBar } from "@/components/SearchBar";
 import { BookGrid } from "@/components/BookGrid";
-import { Loader } from "@/components/Loader";
 import { EmptyState } from "@/components/EmptyState";
 import { Pagination } from "@/components/Pagination";
 
@@ -44,10 +43,6 @@ export default function Home() {
   }, [searchQuery]);
 
 
-  if (loading) {
-    return <Loader />;
-  }
-
   if (error) {
     // Error will be shown as a toast, but we can have a fallback UI
     return (
@@ -78,7 +73,9 @@ export default function Home() {
           />
         </div>
 
-        {paginatedBooks.length > 0 ? (
+        {loading ? (
+          <BookGrid books={[]} isLoading={true} itemsPerPage={ITEMS_PER_PAGE} />
+        ) : paginatedBooks.length > 0 ? (
           <>
             <BookGrid books={paginatedBooks} />
             {totalPages > 1 && (
